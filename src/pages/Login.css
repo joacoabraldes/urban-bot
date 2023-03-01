@@ -1,22 +1,59 @@
-.gradient-custom-2 {
-    /* fallback for old browsers */
-    background: #fccb90;
+
+body {
+  /* fallback for old browsers */
+  background: #6a11cb;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, rgba(229, 22, 72, 1), rgba(108, 10, 34, 1));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, rgba(229, 22, 72, 1), rgba(108, 10, 34, 1))
+}
+.bgcard {
+  background-color: black;
   
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-  
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+input[type="text"], input[type="password"], textarea{
+  width: 70%;
+  border: none;
+  background: transparent;
+  line-height: 2em;
+  border-bottom: 1px solid rgba(108, 10, 34, 1);
+  color: #666;
+  margin-bottom: 5%;
+}
+
+.field-wrapper{
+  margin-top: 20px *1.5;
+  position: relative;
+}
+
+.for-mobile {
+  display: block;
+}
+.for-desktop {
+  display: none;
+}
+@media (max-width: 1024px) {
+  body{
+    background: black;
   }
   
-  @media (min-width: 768px) {
-    .gradient-form {
-      height: 100vh !important;
-    }
-  }
-  @media (min-width: 769px) {
-    .gradient-custom-2 {
-      border-top-right-radius: .3rem;
-      border-bottom-right-radius: .3rem;
-    }
-  }
+}
+
+.button {
+  background-image: linear-gradient(to right, rgba(229, 22, 72, 1),rgba(108, 10, 34, 1));
+  border: none;
+  color: white;
+  padding: 5px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 10px;
+}
