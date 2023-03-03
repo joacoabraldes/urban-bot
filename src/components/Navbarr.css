@@ -1,0 +1,32 @@
+.navbartext {
+  color: rgba(229, 22, 72, 1);
+
+}
+
+.navbartxt {
+  color: white
+}
+
+.logo {
+  width: auto;
+  height: 35px;
+
+}
+
+.navbar-nav{
+  display:flex;
+  flex:1;
+  flex-direction:row-reverse;
+  justify-content: right;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+
+
+
+
+
+
