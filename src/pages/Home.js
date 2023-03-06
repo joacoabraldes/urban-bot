@@ -1,19 +1,16 @@
 import React from "react";
 import {
-  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
   MDBCard,
   MDBCardBody,
-  MDBInput,
-  MDBIcon,
 } from "mdb-react-ui-kit";
 import Navbarr from "../components/Navbarr";
 import { useState } from "react";
 import ModalPicker from "../components/ModalPicker";
 import "./Home.css"
-import logobot from ".."
+
 
 const Home = () => {
   const [week, setWeek] = useState([

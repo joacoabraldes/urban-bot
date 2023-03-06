@@ -2,14 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import {
-  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
   MDBCard,
   MDBCardBody,
-  MDBInput,
-  MDBIcon,
 } from "mdb-react-ui-kit";
 import logobot from "../img/logobot.jpg";
 
@@ -41,7 +38,7 @@ function LogIn() {
             style={{ borderRadius: "1rem", maxWidth: "600px"}}
           >  
             <MDBCardBody className=" p-1 d-flex flex-column align-items-center mx-auto w-100">
-              <img className=" mt-5 mb-3" src={logobot}  style={{width: "200px"}} />
+              <img className=" mt-5 mb-3" src={logobot}  style={{width: "200px"}} alt="" />
             <form onSubmit={handleSubmit} className="p-1 d-flex flex-column align-items-center mx-auto w-100">
               <input
                  className="form__field"

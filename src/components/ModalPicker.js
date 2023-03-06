@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import "./ModalPicker.css";
 
 
@@ -29,10 +29,6 @@ const ModalPicker = (props) => {
   const onPressItem = (horario) => {
     props.setData(horario);
     setUpdate(!update);
-  };
-
-  const Salir = () => {
-    props.changeModalVisibility(false);
   };
 
   const horario = HORARIOS.map((item, index) => {
