@@ -11,21 +11,21 @@ import {
   MDBInput,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import logo from "../img/urbansixfitness.png";
-import fotolean from "../img/profeleanaaa.png";
 import logobot from "../img/logobot.jpg";
 
 function LogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username === "admin" && password === "pass") {
+      setError(false);
       navigate("/home");
     } else {
-      console.log("Invalid credentials!");
+      setError(true);
     }
   };
 
@@ -66,7 +66,10 @@ function LogIn() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-
+                {error && (
+                  <p className="error">*El nombre de usuario o la contraseña no son correctos</p>
+                )
+                }
                 <p className="small mb-3 pb-lg-2">
                   <a class="text-white-50" href="#!">
                   Olvide mi contraseña

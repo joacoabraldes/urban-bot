@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ModalPicker.css";
 
+
 const HORARIOS = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 const HORARIOS_STRING = [
   "7:00 a 8:00",
@@ -21,12 +22,13 @@ const HORARIOS_STRING = [
 ];
 
 const ModalPicker = (props) => {
+  const [update, setUpdate] = useState(false); 
   const selectedTime = props.week[props.selectedDate].horarios;
 
-  console.log(selectedTime);
 
   const onPressItem = (horario) => {
     props.setData(horario);
+    setUpdate(!update);
   };
 
   const Salir = () => {
@@ -36,52 +38,30 @@ const ModalPicker = (props) => {
   useEffect(() => {
     console.log("ModalPicker: ", props.week[props.selectedDate].horarios);
   }, [props.week[props.selectedDate].horarios]);
+
   const horario = HORARIOS.map((item, index) => {
-        
-
-    return (
-        <button
-            key={index}
-            className="horario"
-            onPress={() => onPressItem(item)}
-        >
-            
-            <h1 className={(selectedTime.indexOf(item) === -1 ? "textHorario" :  "textHorario2")}>
-                Book at {HORARIOS_STRING[index]}              
-            </h1>
-        </button>
-    );
-
+        if(props.selectedDate == 5 && (index > 7 || index < 2)){
+        }else{
+          return (
+            <a
+                key={index}
+                className= "horario"
+                id={(selectedTime.indexOf(item) === -1 ? "horario-color-red" :  "horario-color-green")}
+                onClick={() => onPressItem(item)}
+            >
+                    {HORARIOS_STRING[index]}              
+            </a>
+        );
+        }
 });
 
-  return (
-    <div>
-        
-        <button className="salir" onClick={() => Salir()}>
-          <h1>Go Back</h1>
-        </button>
+  return (     
+    <>
 
-        <div>
+        <div className="divhorario">
             {horario}
         </div>
-      </div>
+    </> 
   );
 };
-          /*
-                      <a
-              key={index}
-              className="horario"
-              onClick={() => onPressItem(item)}
-            >
-              <span
-                className={
-                  selectedTime.indexOf(item) === -1
-                    ? "textHorario"
-                    : "textHorario2"
-                }
-              >
-                Book at {HORARIOS_STRING[index]}
-              </span>
-            </a>
-           */
 export default ModalPicker;

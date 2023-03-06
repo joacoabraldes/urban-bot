@@ -9,10 +9,11 @@ import {
   MDBInput,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import profelean from "../img/profeleanaaa.png";
 import Navbarr from "../components/Navbarr";
 import { useState } from "react";
 import ModalPicker from "../components/ModalPicker";
+import "./Home.css"
+import logobot from ".."
 
 const Home = () => {
   const [week, setWeek] = useState([
@@ -40,6 +41,8 @@ const Home = () => {
 
   const [isModalVisible, setisModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(0);
+  const [error, setError] = useState(false);
+  const [selectedClass, setSelectedClass] = useState("FORCE 6");
 
   const changeModalVisibility = (bool) => {
     setisModalVisible(true);
@@ -50,10 +53,14 @@ const Home = () => {
       week[selectedDate].horarios.length < 2 &&
       week[selectedDate].horarios.indexOf(horario) == -1
     ) {
+      setError(false);
       week[selectedDate].horarios = [...week[selectedDate].horarios, horario];
     } else if (week[selectedDate].horarios.indexOf(horario) != -1) {
+      setError(false);
       const index = week[selectedDate].horarios.indexOf(horario);
       week[selectedDate].horarios.splice(index, 1);
+    }else{
+      setError(true);
     }
   };
 
@@ -63,8 +70,17 @@ const Home = () => {
   };
 
   const handleSelectDay = (event) => {
-    console.log(event.target.value);
     setSelectedDate(event.target.value);
+  };
+  const handleSelectClass = (event) => {
+    setSelectedClass(event.target.value);
+  };
+  const handleCopy = () => {
+    for (let i = 0; i < week.length -1; i++) {
+      if (i != selectedDate) {
+        week[i].horarios = [...week[selectedDate].horarios];
+      }
+    }
   };
   return (
     <>
@@ -77,13 +93,15 @@ const Home = () => {
               className="bgcard text-white my-5 mx-auto"
               style={{ borderRadius: "1rem", maxWidth: "600px" }}
             >
-              <MDBCardBody className=" p-1 d-flex flex-column align-items-center mx-auto w-100">
+
+
+
+
+<div className="selects">
+<MDBCardBody className=" pt-4 p-1 d-flex flex-column align-items-center mx-auto w-100">
                 <div >
-                  <select value={selectedDate} name="select">
-                    <option value="FORCE 6" selected>
-                      {" "}
-                      Musculacion{" "}
-                    </option>
+                  <select name="select" onChange={handleSelectClass} value={selectedClass}>
+                    <option value="FORCE 6" selected>Musculacion</option>
                     <option value="CROSS 6">CrossFit</option>
                     <option value="HIIT 6">HIIT</option>
                     <option value="RIDE 6">Spinning</option>
@@ -94,11 +112,8 @@ const Home = () => {
 
               <MDBCardBody className=" p-1 d-flex flex-column align-items-center mx-auto w-100">
                 <div>
-                  <select name="select" onChange={handleSelectDay}>
-                    <option value={0}>
-                      {" "}
-                      Lunes{" "}
-                    </option>
+                  <select name="select" onChange={handleSelectDay} value={selectedDate}>
+                    <option value={0}>Lunes</option>
                     <option value={1}> Martes </option>
                     <option value={2}>Miercoles</option>
                     <option value={3}>Jueves</option>
@@ -107,20 +122,33 @@ const Home = () => {
                   </select>
                 </div>
               </MDBCardBody>
+</div>
+
+              
+              <p className="pepe">SELECCIONA QUE HORARIOS QUERES RESERVAR (MAX 2) POD DIA:</p>
+              {error && (
+                  <p className="error">*Sos pelotudo o no leiste</p>
+                )
+                }
               <ModalPicker
                 changeModalVisibility= {changeModalVisibility}
                 setData={setData}
                 week={week}
                 selectedDate={selectedDate}
               />
-              <MDBCardBody className=" p-1 d-flex flex-column align-items-center mx-auto w-100">
-                <div >
-                  <img src={profelean}></img>
-                </div>
+
+<MDBCardBody className=" p-1 d-flex flex-column align-items-start mx-auto w-100">
+<a className="uwu" onClick={handleCopy}> Copiar para toda la semana</a>
               </MDBCardBody>
+<MDBCardBody className=" pb-4 p-1 d-flex flex-column align-items-center mx-auto w-100">
+<button className="button">Guardar Cambios</button>
+              </MDBCardBody>
+
+
+             
             </MDBCard>
 
-            <button>HOLAAAAAAA</button>
+            
           </MDBCol>
         </MDBRow>
       </MDBContainer>
