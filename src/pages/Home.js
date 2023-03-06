@@ -36,10 +36,16 @@ const Home = () => {
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+
+  const date = new Date();
+  const dayOfWeek = date.getDay();
   const [isModalVisible, setisModalVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(0);
+  console.log(dayOfWeek)
+  const [selectedDate, setSelectedDate] = useState(dayOfWeek - 1);
   const [error, setError] = useState(false);
   const [selectedClass, setSelectedClass] = useState("FORCE 6");
+  
+
 
   const changeModalVisibility = (bool) => {
     setisModalVisible(true);
