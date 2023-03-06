@@ -98,7 +98,7 @@ const Home = () => {
 
 
 <div className="selects">
-<MDBCardBody className=" pt-4 p-1 d-flex flex-column align-items-center mx-auto w-100">
+<MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-right mx-auto w-100">
                 <div >
                   <select name="select" onChange={handleSelectClass} value={selectedClass}>
                     <option value="FORCE 6" selected>Musculacion</option>
@@ -110,7 +110,7 @@ const Home = () => {
                 </div>
               </MDBCardBody>
 
-              <MDBCardBody className=" p-1 d-flex flex-column align-items-center mx-auto w-100">
+              <MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-left mx-auto w-100">
                 <div>
                   <select name="select" onChange={handleSelectDay} value={selectedDate}>
                     <option value={0}>Lunes</option>

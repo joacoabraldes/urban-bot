@@ -35,10 +35,6 @@ const ModalPicker = (props) => {
     props.changeModalVisibility(false);
   };
 
-  useEffect(() => {
-    console.log("ModalPicker: ", props.week[props.selectedDate].horarios);
-  }, [props.week[props.selectedDate].horarios]);
-
   const horario = HORARIOS.map((item, index) => {
         if(props.selectedDate == 5 && (index > 7 || index < 2)){
         }else{

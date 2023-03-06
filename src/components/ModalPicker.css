@@ -60,7 +60,7 @@
 }
 @media (max-width: 1024px) {
     .divhorario{
-        padding-top: 100%;
+        padding-top: 112%;
     }
     #horario-color-red:hover {
         color: rgba(229, 22, 72, 1);

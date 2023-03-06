@@ -74,7 +74,14 @@
     box-shadow: 0 0 0 3px rgba(229, 22, 72, 0.4);
     background-color: #fff;
   }
+
 .selects{
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  text-align: center;
+  padding-top: 3%;
 }
   
   
