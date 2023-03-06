@@ -10,9 +10,12 @@ import Navbarr from "../components/Navbarr";
 import { useState } from "react";
 import ModalPicker from "../components/ModalPicker";
 import "./Home.css"
-
+import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from './LogIn.js';
 
 const Home = () => {
+
   const [week, setWeek] = useState([
     {
       horarios: [],
@@ -40,11 +43,9 @@ const Home = () => {
   const date = new Date();
   const dayOfWeek = date.getDay();
   const [isModalVisible, setisModalVisible] = useState(false);
-  console.log(dayOfWeek)
   const [selectedDate, setSelectedDate] = useState(dayOfWeek - 1);
   const [error, setError] = useState(false);
   const [selectedClass, setSelectedClass] = useState("FORCE 6");
-  
 
 
   const changeModalVisibility = (bool) => {
@@ -96,10 +97,7 @@ const Home = () => {
               className="bgcard text-white my-5 mx-auto"
               style={{ borderRadius: "1rem", maxWidth: "600px" }}
             >
-
-
-
-
+              
 <div className="selects">
 <MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-right mx-auto w-100">
                 <div >

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import "./Login.css";
 import {
   MDBContainer,
@@ -9,22 +9,73 @@ import {
   MDBCardBody,
 } from "mdb-react-ui-kit";
 import logobot from "../img/logobot.jpg";
+import { collection, where } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore ,query,getDocs,doc} from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBADh0zs1OxNcoVsurGj-bwCfCUHsbTnyI",
+  authDomain: "urbanbookingbot.firebaseapp.com",
+  databaseURL: "https://urbanbookingbot-default-rtdb.firebaseio.com",
+  projectId: "urbanbookingbot",
+  storageBucket: "urbanbookingbot.appspot.com",
+  messagingSenderId: "111234008963",
+  appId: "1:111234008963:web:5971541a631ec16b1558b6"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+const userRef = collection(db, "users");
 
 function LogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
-  const handleSubmit = (e) => {
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "pass") {
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, username, password)
+  .then((userCredential) => {
+    setError(false);
+    setUser(userCredential.user); 
+    console.log(user)
+    navigate('/home');
+  })
+  .catch((error) => {
+    setError(true);
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+
+  
+/*
+    const q = query(userRef, where("user", "==", username), where("pass", "==", password));
+    const querySnapshot = await getDocs(q);
+
+    var user = {};
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      user = (doc.id, " => ", doc.data());
+    });
+
+    if (user.user === username && user.pass === password) {
       setError(false);
-      navigate("/home");
+      navigate(`/home?user=${encodeURIComponent(JSON.stringify(user))}`);
     } else {
-      setError(true);
+      
     }
+*/
   };
+
+  
 
   return (
     <MDBContainer fluid>
@@ -46,7 +97,7 @@ function LogIn() {
                   labelClass="text-white"
                   placeholder="Usuario"
                   id="formControlLg"
-                  type="text"
+                  type="email"
                   size="lg"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}

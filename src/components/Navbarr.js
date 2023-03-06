@@ -4,7 +4,7 @@ import "./Navbarr.css";
 import logo from '../img/logobot.jpg';
 import Image from 'react-bootstrap/Image';
 
-const Navbarr = () => {
+const Navbarr = (props) => {
   return (
 
 <Navbar bg="black" className='expand'>
@@ -13,7 +13,7 @@ const Navbarr = () => {
   <Navbar.Toggle />
   <Navbar.Collapse className="justify-content-end ms-auto">
     <Navbar.Text className='navbartext ml-5'>
-      Signed in as: <Navbar.Text className='navbartxt' href="#login"> Mark Otto</Navbar.Text>
+      Signed in as: <Navbar.Text className='navbartxt' href="#login"> {props.user}</Navbar.Text>
     </Navbar.Text>
   </Navbar.Collapse>
 </div>

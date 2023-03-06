@@ -18,7 +18,7 @@ textarea:focus, input:focus{
   outline: none;
 }
 
-input[type="text"], input[type="password"], textarea{
+input[type="email"], input[type="password"], textarea{
   width: 70%;
   border: none;
   background: transparent;
