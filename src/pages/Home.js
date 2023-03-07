@@ -10,9 +10,7 @@ import Navbarr from "../components/Navbarr";
 import { useState } from "react";
 import ModalPicker from "../components/ModalPicker";
 import "./Home.css";
-import { useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import UserContext from '../Context/user-context';
+
 
 const Home = (props) => {
   const [week, setWeek] = useState([
@@ -44,7 +42,7 @@ const Home = (props) => {
   const [selectedDate, setSelectedDate] = useState(dayOfWeek - 1);
   const [error, setError] = useState(false);
   const [selectedClass, setSelectedClass] = useState("FORCE 6");
-  const { user } = useContext(UserContext);
+ 
 
   const changeModalVisibility = (bool) => {
     setisModalVisible(true);
@@ -86,7 +84,7 @@ const Home = (props) => {
   };
   return (
     <>
-      <Navbarr user={user}/>
+      <Navbarr />
 
       <MDBContainer fluid>
         <MDBRow className="d-flex justify-content-center align-items-center h-100">

@@ -13,8 +13,6 @@ import { collection, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, query, getDocs, doc } from "firebase/firestore";
-import { useContext } from 'react';
-import UserContext from '../Context/user-context';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBADh0zs1OxNcoVsurGj-bwCfCUHsbTnyI",
@@ -36,7 +34,7 @@ function LogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const [user, setUser] = useState({});
 
   const handleSubmit = async (e) => {
  
