@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import {
   MDBContainer,
@@ -12,7 +12,9 @@ import logobot from "../img/logobot.jpg";
 import { collection, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore ,query,getDocs,doc} from "firebase/firestore";
+import { getFirestore, query, getDocs, doc } from "firebase/firestore";
+import { useContext } from 'react';
+import UserContext from '../Context/user-context';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBADh0zs1OxNcoVsurGj-bwCfCUHsbTnyI",
@@ -21,7 +23,7 @@ const firebaseConfig = {
   projectId: "urbanbookingbot",
   storageBucket: "urbanbookingbot.appspot.com",
   messagingSenderId: "111234008963",
-  appId: "1:111234008963:web:5971541a631ec16b1558b6"
+  appId: "1:111234008963:web:5971541a631ec16b1558b6",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -34,29 +36,29 @@ function LogIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
+ 
     e.preventDefault();
 
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, username, password)
-  .then((userCredential) => {
-    setError(false);
-    setUser(userCredential.user); 
-    console.log(user)
-    navigate('/home');
-  })
-  .catch((error) => {
-    setError(true);
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+    await signInWithEmailAndPassword(auth, username, password)
+      .then((userCredential) => {
+        setError(false);
+        setUser(userCredential.user);
+        navigate("/home");
+     
+      })
+      .catch((error) => {
+        setError(true);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
 
-  
-/*
+      
+
+    /*
     const q = query(userRef, where("user", "==", username), where("pass", "==", password));
     const querySnapshot = await getDocs(q);
 
@@ -75,24 +77,27 @@ function LogIn() {
 */
   };
 
-  
-
   return (
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
-       
-    
-        <MDBCol col="12" style={{marginTop: "10%"}}>
-         
+        <MDBCol col="12" style={{ marginTop: "10%" }}>
           <MDBCard
             className="bgcard text-white my-5 mx-auto"
-            style={{ borderRadius: "1rem", maxWidth: "600px"}}
-          >  
+            style={{ borderRadius: "1rem", maxWidth: "600px" }}
+          >
             <MDBCardBody className=" p-1 d-flex flex-column align-items-center mx-auto w-100">
-              <img className=" mt-5 mb-3" src={logobot}  style={{width: "200px"}} alt="" />
-            <form onSubmit={handleSubmit} className="p-1 d-flex flex-column align-items-center mx-auto w-100">
-              <input
-                 className="form__field"
+              <img
+                className=" mt-5 mb-3"
+                src={logobot}
+                style={{ width: "200px" }}
+                alt=""
+              />
+              <form
+                onSubmit={handleSubmit}
+                className="p-1 d-flex flex-column align-items-center mx-auto w-100"
+              >
+                <input
+                  className="form__field"
                   wrapperClass="mb-4 mx-5 w-75"
                   labelClass="text-white"
                   placeholder="Usuario"
@@ -104,7 +109,7 @@ function LogIn() {
                 />
 
                 <input
-                 className="form__field"
+                  className="form__field"
                   wrapperClass="mb-4 mx-5 w-75"
                   labelClass="text-white"
                   placeholder="Contraseña"
@@ -115,34 +120,37 @@ function LogIn() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 {error && (
-                  <p className="error">*El nombre de usuario o la contraseña no son correctos</p>
-                )
-                }
+                  <p className="error">
+                    *El nombre de usuario o la contraseña no son correctos
+                  </p>
+                )}
                 <p className="small mb-3 pb-lg-2">
                   <a class="text-white-50" href="#!">
-                  Olvide mi contraseña
+                    Olvide mi contraseña
                   </a>
                 </p>
-                <button outline className="button mx-2 px-5" color="white" size="lg">
+                <button
+                  outline
+                  className="button mx-2 px-5"
+                  color="white"
+                  size="lg"
+                  type="submit"
+                >
                   Entrar
                 </button>
-
-                </form>
+              </form>
 
               <div className="mb-5 mt-3">
                 <p className="mb-0">
-                ¿No tenes cuenta? 	&nbsp;
-                  <a href="#!" class="text-white-50 fw-bold">
-                     Crear cuenta
+                  ¿No tenes cuenta? &nbsp;
+                  <a href="#!" className="text-white-50 fw-bold">
+                    Crear cuenta
                   </a>
                 </p>
               </div>
             </MDBCardBody>
-      
           </MDBCard>
-         
         </MDBCol>
-      
       </MDBRow>
     </MDBContainer>
   );
