@@ -43,6 +43,7 @@ const Home = (props) => {
   const [selectedDate, setSelectedDate] = useState(dayOfWeek - 1);
   const [error, setError] = useState(false);
   const [selectedClass, setSelectedClass] = useState("FORCE 6");
+  const [update,setUpdate] = useState(true)
   const location = useLocation();
   const user = location.state.user;
  
@@ -84,6 +85,11 @@ const Home = (props) => {
         week[i].horarios = [...week[selectedDate].horarios];
       }
     }
+  };
+
+  const handleDelete = () => {
+    week[selectedDate].horarios = [];
+    setUpdate(!update)
   };
   return (
     <>
@@ -143,13 +149,19 @@ const Home = (props) => {
                 week={week}
                 selectedDate={selectedDate}
               />
-
+ <div className="uwus">
               <MDBCardBody className=" p-1 d-flex flex-column align-items-start mx-auto w-100">
                 <a className="uwu" onClick={handleCopy}>
                   {" "}
                   Copiar para toda la semana
                 </a>
               </MDBCardBody>
+              <MDBCardBody className=" p-1 d-flex flex-column align-items-end mx-auto w-100">
+                <a className="uwu" onClick={handleDelete}>
+                  Borrar
+                </a>
+              </MDBCardBody>
+              </div>
               <MDBCardBody className=" pb-4 p-1 d-flex flex-column align-items-center mx-auto w-100">
                 <button className="button">Guardar Cambios</button>
               </MDBCardBody>
