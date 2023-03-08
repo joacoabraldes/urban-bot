@@ -45,15 +45,12 @@ function LogIn() {
       setError(false);
       setUser(userCredential.user);
       const userObj = { email: userCredential.user.email };
-      console.log(userObj);
       navigate("/home", { state: { user: userObj } });
     } catch (error) {
       setError(true);
       const errorCode = error.code;
       const errorMessage = error.message;
     }
-
-      
 
     /*
     const q = query(userRef, where("user", "==", username), where("pass", "==", password));
