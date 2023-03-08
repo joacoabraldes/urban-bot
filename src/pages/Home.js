@@ -10,6 +10,7 @@ import Navbarr from "../components/Navbarr";
 import { useState } from "react";
 import ModalPicker from "../components/ModalPicker";
 import "./Home.css";
+import { useLocation } from "react-router-dom";
 
 
 const Home = (props) => {
@@ -42,6 +43,8 @@ const Home = (props) => {
   const [selectedDate, setSelectedDate] = useState(dayOfWeek - 1);
   const [error, setError] = useState(false);
   const [selectedClass, setSelectedClass] = useState("FORCE 6");
+  const location = useLocation();
+  const user = location.state.user;
  
 
   const changeModalVisibility = (bool) => {
@@ -84,7 +87,7 @@ const Home = (props) => {
   };
   return (
     <>
-      <Navbarr />
+      <Navbarr user={user}/>
 
       <MDBContainer fluid>
         <MDBRow className="d-flex justify-content-center align-items-center h-100">

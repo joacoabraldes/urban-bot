@@ -37,22 +37,21 @@ function LogIn() {
   const [user, setUser] = useState({});
 
   const handleSubmit = async (e) => {
- 
     e.preventDefault();
-
+  
     const auth = getAuth();
-    await signInWithEmailAndPassword(auth, username, password)
-      .then((userCredential) => {
-        setError(false);
-        setUser(userCredential.user);
-        navigate("/home");
-     
-      })
-      .catch((error) => {
-        setError(true);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, username, password);
+      setError(false);
+      setUser(userCredential.user);
+      const userObj = { email: userCredential.user.email };
+      console.log(userObj);
+      navigate("/home", { state: { user: userObj } });
+    } catch (error) {
+      setError(true);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    }
 
       
 
