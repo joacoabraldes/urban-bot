@@ -52,6 +52,8 @@ function LogIn() {
       const errorMessage = error.message;
     }
 
+      
+
     /*
     const q = query(userRef, where("user", "==", username), where("pass", "==", password));
     const querySnapshot = await getDocs(q);
