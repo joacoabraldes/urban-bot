@@ -18,8 +18,8 @@ const Navbarr = (props) => {
           <Image className="logo navbar-nav " src={logo} />{" "}
         </Navbar.Brand>
         <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end ms-auto">
-          <Navbar.Text className="navbartext ml-5">
+        <Navbar.Collapse className="justify-content-end mr-5">
+          <Navbar.Text className="navbartext">
             Signed in as: <Navbar.Text className="navbartxt" href="#login">{username}</Navbar.Text>
           </Navbar.Text>
         </Navbar.Collapse>
