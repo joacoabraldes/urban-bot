@@ -7,11 +7,28 @@ import {
   MDBCardBody,
 } from "mdb-react-ui-kit";
 import Navbarr from "../components/Navbarr";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import ModalPicker from "../components/ModalPicker";
 import "./Home.css";
 import { useLocation } from "react-router-dom";
+import { getFirestore, query, getDocs, doc } from "firebase/firestore";
+import { collection, where } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBADh0zs1OxNcoVsurGj-bwCfCUHsbTnyI",
+  authDomain: "urbanbookingbot.firebaseapp.com",
+  databaseURL: "https://urbanbookingbot-default-rtdb.firebaseio.com",
+  projectId: "urbanbookingbot",
+  storageBucket: "urbanbookingbot.appspot.com",
+  messagingSenderId: "111234008963",
+  appId: "1:111234008963:web:5971541a631ec16b1558b6",
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+const userRef = collection(db, "users");
 
 const Home = (props) => {
   const [week, setWeek] = useState([
@@ -32,7 +49,7 @@ const Home = (props) => {
     },
     {
       horarios: [],
-    },
+    }
   ]);
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -46,7 +63,42 @@ const Home = (props) => {
   const [update,setUpdate] = useState(true)
   const location = useLocation();
   const user = location.state.user;
+  const [userInfo,setUserInfo] = useState(undefined);
  
+  const getUser  = async (u) => {
+    const q = query(userRef, where("email", "==", u.email));
+    const querySnapshot = await getDocs(q);
+    
+    var usuario = {};
+    querySnapshot.forEach((doc) => {
+      usuario = (doc.id, " => ", doc.data());
+    });
+
+    if (usuario.email === u.email) {
+        await setUserInfo(usuario);
+        setWeek([
+          {
+            horarios: usuario.Mon,
+          },
+          {
+            horarios: usuario.Tue,
+          },
+          {
+            horarios: usuario.Wed,
+          },
+          {
+            horarios: usuario.Thu,
+          },
+          {
+            horarios: usuario.Fri,
+          },
+          {
+            horarios: usuario.Sat,
+          }
+          ])
+    } 
+  }
+  
 
   const changeModalVisibility = (bool) => {
     setisModalVisible(true);
@@ -91,6 +143,16 @@ const Home = (props) => {
     week[selectedDate].horarios = [];
     setUpdate(!update)
   };
+
+  useEffect(() => {
+    if(userInfo == undefined){
+      getUser(user)
+    }
+    console.log("resultado y week")
+    console.log(userInfo)
+    console.log(week)
+  }, []);
+
   return (
     <>
       <Navbarr user={user}/>

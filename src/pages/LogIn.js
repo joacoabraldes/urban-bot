@@ -51,26 +51,6 @@ function LogIn() {
       const errorCode = error.code;
       const errorMessage = error.message;
     }
-
-      
-
-    /*
-    const q = query(userRef, where("user", "==", username), where("pass", "==", password));
-    const querySnapshot = await getDocs(q);
-
-    var user = {};
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      user = (doc.id, " => ", doc.data());
-    });
-
-    if (user.user === username && user.pass === password) {
-      setError(false);
-      navigate(`/home?user=${encodeURIComponent(JSON.stringify(user))}`);
-    } else {
-      
-    }
-*/
   };
 
   return (
