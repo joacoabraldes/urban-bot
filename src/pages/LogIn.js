@@ -14,6 +14,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, query, getDocs, doc } from "firebase/firestore";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyBADh0zs1OxNcoVsurGj-bwCfCUHsbTnyI",
   authDomain: "urbanbookingbot.firebaseapp.com",
@@ -28,7 +29,6 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 const userRef = collection(db, "users");
-
 function LogIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
