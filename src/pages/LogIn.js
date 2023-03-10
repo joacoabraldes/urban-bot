@@ -53,6 +53,10 @@ function LogIn() {
     }
   };
 
+  const SignIn = () => {
+    navigate("/SignIn");
+  }
+
   return (
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
@@ -119,7 +123,7 @@ function LogIn() {
               <div className="mb-5 mt-3">
                 <p className="mb-0">
                   ¿No tenes cuenta? &nbsp;
-                  <a href="#!" className="text-white-50 fw-bold">
+                  <a href="#!" className="text-white-50 fw-bold" onClick={SignIn} >
                     Crear cuenta
                   </a>
                 </p>
