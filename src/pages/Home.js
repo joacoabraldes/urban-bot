@@ -11,7 +11,7 @@ import { useState ,useEffect} from "react";
 import ModalPicker from "../components/ModalPicker";
 import "./Home.css";
 import { useLocation } from "react-router-dom";
-import { getFirestore, query, getDocs, doc } from "firebase/firestore";
+import { getFirestore, query, getDocs, doc ,updateDoc} from "firebase/firestore";
 import { collection, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
@@ -64,6 +64,7 @@ const Home = (props) => {
   const location = useLocation();
   const user = location.state.user;
   const [userInfo,setUserInfo] = useState(undefined);
+  const [remainingDays, serRemainingDays] = useState(undefined)
  
   const getUser  = async (u) => {
     const q = query(userRef, where("email", "==", u.email));
@@ -75,7 +76,8 @@ const Home = (props) => {
     });
 
     if (usuario.email === u.email) {
-        await setUserInfo(usuario);
+        setUserInfo(usuario);
+        serRemainingDays(usuario.remainingDays)
         setWeek([
           {
             horarios: usuario.Mon,
@@ -144,18 +146,30 @@ const Home = (props) => {
     setUpdate(!update)
   };
 
+  const handleSave = async () => {
+    
+    const theUserRef = doc(db, "users", userInfo.email);
+
+    await updateDoc(theUserRef, {
+      Mon: week[0].horarios,
+      Tue: week[1].horarios,
+      Wed: week[2].horarios,
+      Thu: week[3].horarios,
+      Fri: week[4].horarios,
+      Sat: week[5].horarios,
+    });
+  };
+
+
   useEffect(() => {
     if(userInfo == undefined){
       getUser(user)
     }
-    console.log("resultado y week")
-    console.log(userInfo)
-    console.log(week)
   }, []);
 
   return (
     <>
-      <Navbarr user={user}/>
+      <Navbarr user={user} />
 
       <MDBContainer fluid>
         <MDBRow className="d-flex justify-content-center align-items-center h-100">
@@ -164,6 +178,12 @@ const Home = (props) => {
               className="bgcard text-white my-5 mx-auto"
               style={{ borderRadius: "1rem", maxWidth: "600px" }}
             >
+              <MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-right mx-auto w-100">
+                <p className="pepe">
+                  DIAS RESTANTES: {remainingDays}
+                </p>
+              </MDBCardBody>
+
               <div className="selects">
                 <MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-right mx-auto w-100">
                   <div>
@@ -211,21 +231,23 @@ const Home = (props) => {
                 week={week}
                 selectedDate={selectedDate}
               />
- <div className="uwus">
-              <MDBCardBody className=" p-1 d-flex flex-column align-items-start mx-auto w-100">
-                <a className="uwu" onClick={handleCopy}>
-                  {" "}
-                  Copiar para toda la semana
-                </a>
-              </MDBCardBody>
-              <MDBCardBody className=" p-1 d-flex flex-column align-items-end mx-auto w-100">
-                <a className="uwu" onClick={handleDelete}>
-                  Borrar
-                </a>
-              </MDBCardBody>
+              <div className="selects">
+                <MDBCardBody className=" ">
+                  <a className="uwu" onClick={handleCopy}>
+                    {" "}
+                    Copiar para toda la semana
+                  </a>
+                </MDBCardBody>
+                <MDBCardBody className=" ">
+                  <a className="uwu" onClick={handleDelete}>
+                    Borrar
+                  </a>
+                </MDBCardBody>
               </div>
               <MDBCardBody className=" pb-4 p-1 d-flex flex-column align-items-center mx-auto w-100">
-                <button className="button">Guardar Cambios</button>
+                <button className="button" onClick={handleSave}>
+                  Guardar Cambios
+                </button>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

@@ -11,7 +11,6 @@
 }
 
 
-
 .horario {
     text-decoration: none;
     background-color: transparent;
@@ -28,7 +27,6 @@
     align-items: center;
     text-align: center;
     width: 270px;
-  
   }
   
   #horario-color-red{
@@ -50,7 +48,6 @@
   
 .divhorario {
     margin-top: 2%;
-    padding-top: 72%;
     height: 200px;
     overflow: scroll;
     display: flex;
@@ -58,10 +55,12 @@
     justify-content: center;
     align-items: center;
 }
+#semana{ padding-top: 72%;}
+#finde{padding-top: 28%;}
 @media (max-width: 1024px) {
-    .divhorario{
-        padding-top: 112%;
-    }
+      #semana{ padding-top: 112%;}
+      #finde{padding-top: 36%;}
+  
     #horario-color-red:hover {
         color: rgba(229, 22, 72, 1);
     border: 2px solid rgba(229, 22, 72, 1);

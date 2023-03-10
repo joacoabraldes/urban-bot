@@ -42,10 +42,8 @@
     cursor: pointer;
     outline: none;
     margin-bottom: 2%;
-  
     width: 270px;
     color: aliceblue;
-    padding-left: 15px;
     padding-bottom: 5px;
   }
 
@@ -84,15 +82,7 @@
   padding-top: 3%;
 }
 
-.uwus{
-  display: flex;
-  flex-direction: row;
 
-  align-items: center;
-  text-align: center;
-  padding-top: 3%;
-}
-  
   
   
   

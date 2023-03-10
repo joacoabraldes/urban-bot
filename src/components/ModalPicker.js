@@ -26,6 +26,7 @@ const ModalPicker = (props) => {
   const selectedTime = props.week[props.selectedDate].horarios;
 
 
+
   const onPressItem = (horario) => {
     props.setData(horario);
     setUpdate(!update);
@@ -50,7 +51,7 @@ const ModalPicker = (props) => {
   return (     
     <>
 
-        <div className="divhorario">
+        <div className="divhorario" id={props.selectedDate == 5 ? "finde" : "semana"}>
             {horario}
         </div>
     </> 
