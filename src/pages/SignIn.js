@@ -36,58 +36,17 @@ const db = getFirestore(app);
 const userRef = collection(db, "users");
 
 function SignIn() {
-  const fetchId = async (mail, password) => {
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "path",
-      "/Application/ec1d38d7-d359-48d0-a60c-d8c0b8fb9df9/Login?_c=es-ES"
-    );
-    myHeaders.append("authority", "services.mywellness.com");
-    myHeaders.append("content-type", "application/json");
-    myHeaders.append("x-mwapps-tz-olson", "America/Argentina/Buenos_Aires");
-    myHeaders.append(
-      "User-Agent",
-      "MywellnessCustom/12 CFNetwork/1404.0.5 Darwin/22.3.0"
-    );
-    myHeaders.append("x-mwapps-client", "mywellnessappios40");
-    myHeaders.append("x-mwapps-appid", "ec1d38d7-d359-48d0-a60c-d8c0b8fb9df9");
-    myHeaders.append(
-      "Cookie",
-      "_mwappseu=ec1d38d7-d359-48d0-a60c-d8c0b8fb9df9|MjAyMzAzMTAxNDM1MDZ8NmRmNDJiNzM0NWIzNDA1Yjg5NWU0YjY2YzRlMGY3Y2J8ZWMxZDM4ZDdkMzU5NDhkMGE2MGNkOGMwYjhmYjlkZjl8NnxBcmdlbnRpbmEgU3RhbmRhcmQgVGltZXxlcy1FU3wxODU4YjY0ZDQwYmQ0N2VlODAyNTU0N2U2ODgzM2ZjYnx8fHwxfDF8MHwxMDB8fHw1OHwyMzg5fDB8Y29tLm15d2VsbG5lc3M1.0D3A2DD49E5E5CBE2F2DC9240F10DA45495C6FC28B4E5E3F714B96A8FEC89A863387B81F4B2EAA120544D8AEC283AA65EB30E8148586171A32D06E639B9F1700; _mwappseu=ec1d38d7-d359-48d0-a60c-d8c0b8fb9df9|MjAyMzAzMTAyMDI3MjB8NmRmNDJiNzM0NWIzNDA1Yjg5NWU0YjY2YzRlMGY3Y2J8ZWMxZDM4ZDdkMzU5NDhkMGE2MGNkOGMwYjhmYjlkZjl8NnxBcmdlbnRpbmEgU3RhbmRhcmQgVGltZXxlcy1FU3wxODU4YjY0ZDQwYmQ0N2VlODAyNTU0N2U2ODgzM2ZjYnx8fHwxfDF8MHwxMDB8fHw1OHw3MDQ1fDB8Y29tLm15d2VsbG5lc3M1.CD29C8CF3CB66A95CD381DB718DDF1EAD198D53527BFCE393C3CCCC41E4613B2FAF50C3BD54A4B109A67016F25301F450B7A0791B66FCB36F757B112B86D4519"
-    );
-    myHeaders.append(
-      "Authorization",
-      "Bearer MjAyMzAzMTAxNDM2MDB8NmRmNDJiNzM0NWIzNDA1Yjg5NWU0YjY2YzRlMGY3Y2J8ZWMxZDM4ZDdkMzU5NDhkMGE2MGNkOGMwYjhmYjlkZjl8NnxBcmdlbnRpbmEgU3RhbmRhcmQgVGltZXxlcy1FU3wxODU4YjY0ZDQwYmQ0N2VlODAyNTU0N2U2ODgzM2ZjYnx8fHwxfDF8MHwxMDB8fHw1OHw3ODE0fDB8Y29tLm15d2VsbG5lc3M1.02D84E07DBCAAFDB3E1394801EFD0D60C1F3EC00C75D9791D1AC798B7E87884307958104CEB2638045B6ADBBEAF0CC0A62B2FBBEF3FF4DD162C8576078016B13"
-    );
-
-    var raw = JSON.stringify({
-      password: mail,
-      username: password,
-      keepMeLoggedIn: true,
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch(
-      "https://services.mywellness.com/Application/ec1d38d7-d359-48d0-a60c-d8c0b8fb9df9/Login?_c=es-ES",
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => console.log("error", error));
-  };
-
   const [mail, setMail] = useState("");
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordbot, setPasswordbot] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(0);
+  const [creado, setCreado] = useState(0);
+
+  function isValidGuid(input) {
+    const guidPattern =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return guidPattern.test(input);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,32 +56,36 @@ function SignIn() {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         mail,
-        passwordbot
+        password
       );
-      setError(false);
+      setError(0);
+      setCreado(1);
+      setId('')
+        setMail('')
+        setPassword('')
     } catch (error) {
       console.error(error);
-      setError(true);
+      setError(1);
     }
 
-    console.log(mail, password);
+    if (isValidGuid(id)) {
+      setError(0);
+      const newUser = {
+        email: mail,
+        id: id,
+        Mon: [],
+        Tue: [],
+        Wed: [],
+        Thu: [],
+        Fri: [],
+        Sat: [],
+        remainingDays: 3,
+      };
 
-    const id = await fetchId(mail, password);
-
-    console.log(id);
-
-    const newUser = {
-      email: mail,
-      id: id,
-      Mon: [],
-      Tue: [],
-      Wed: [],
-      Thu: [],
-      Fri: [],
-      Sat: [],
-    };
-
-    await setDoc(doc(userRef, mail), newUser);
+      await setDoc(doc(userRef, mail), newUser);
+    } else {
+      setError(2);
+    }
   };
 
   return (
@@ -148,7 +111,7 @@ function SignIn() {
                   className="form__field"
                   wrapperClass="mb-4 mx-5 w-75"
                   labelClass="text-white"
-                  placeholder="Mail de Urban Six"
+                  placeholder="Mail"
                   id="formControlLg"
                   type="email"
                   size="lg"
@@ -160,24 +123,24 @@ function SignIn() {
                   className="form__field"
                   wrapperClass="mb-4 mx-5 w-75"
                   labelClass="text-white"
-                  placeholder="Contraseña de Urban Six"
+                  placeholder="Id del Usuario"
                   id="formControlLg"
-                  type="password"
+                  type="text"
                   size="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={id}
+                  onChange={(e) => setId(e.target.value)}
                 />
 
                 <input
                   className="form__field"
                   wrapperClass="mb-4 mx-5 w-75"
                   labelClass="text-white"
-                  placeholder="Contraseña del bot"
+                  placeholder="Contraseña"
                   id="formControlLg"
                   type="password"
                   size="lg"
-                  value={passwordbot}
-                  onChange={(e) => setPasswordbot(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <button
@@ -190,10 +153,18 @@ function SignIn() {
                   Crear cuenta
                 </button>
 
-                {error && (
+                {error === 1 && (
                   <p className="text-danger mt-3">
                     Error al crear la cuenta. Por favor, inténtalo de nuevo más
                     tarde.
+                  </p>
+                )}
+                {error === 2 && (
+                  <p className="text-danger mt-3">El ID no es valido.</p>
+                )}
+                {creado === 1 && (
+                  <p className="text-success mt-3">
+                    Cuenta creada correctamente.
                   </p>
                 )}
               </form>

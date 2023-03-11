@@ -1,0 +1,21 @@
+[debug] [2023-03-11T04:06:56.379Z] ----------------------------------------------------------------------
+[debug] [2023-03-11T04:06:56.381Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Joaco\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-03-11T04:06:56.381Z] CLI Version:   11.24.1
+[debug] [2023-03-11T04:06:56.382Z] Platform:      win32
+[debug] [2023-03-11T04:06:56.382Z] Node Version:  v18.14.2
+[debug] [2023-03-11T04:06:56.383Z] Time:          Sat Mar 11 2023 01:06:56 GMT-0300 (hora estándar de Argentina)
+[debug] [2023-03-11T04:06:56.383Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-11T04:06:56.390Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-11T04:06:56.390Z] > authorizing via signed-in user (urbansixbot@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\urban-bot
+

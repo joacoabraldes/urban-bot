@@ -14,7 +14,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, query, getDocs, doc } from "firebase/firestore";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyBADh0zs1OxNcoVsurGj-bwCfCUHsbTnyI",
   authDomain: "urbanbookingbot.firebaseapp.com",
@@ -38,10 +37,14 @@ function LogIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const auth = getAuth();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, username, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        username,
+        password
+      );
       setError(false);
       setUser(userCredential.user);
       const userObj = { email: userCredential.user.email };
@@ -55,7 +58,7 @@ function LogIn() {
 
   const SignIn = () => {
     navigate("/SignIn");
-  }
+  };
 
   return (
     <MDBContainer fluid>
@@ -104,14 +107,9 @@ function LogIn() {
                     *El nombre de usuario o la contraseña no son correctos
                   </p>
                 )}
-                <p className="small mb-3 pb-lg-2">
-                  <a class="text-white-50" href="#!">
-                    Olvide mi contraseña
-                  </a>
-                </p>
                 <button
                   outline
-                  className="button mx-2 px-5"
+                  className="button mx-2 px-5 mt-2"
                   color="white"
                   size="lg"
                   type="submit"
@@ -120,10 +118,10 @@ function LogIn() {
                 </button>
               </form>
 
-              <div className="mb-5 mt-3">
+              <div className="mb-5 mt-2">
                 <p className="mb-0">
                   ¿No tenes cuenta? &nbsp;
-                  <a href="#!" className="text-white-50 fw-bold" onClick={SignIn} >
+                  <a className="text-white-50" onClick={SignIn}>
                     Crear cuenta
                   </a>
                 </p>
