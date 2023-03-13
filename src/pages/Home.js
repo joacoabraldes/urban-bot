@@ -195,10 +195,7 @@ const Home = (props) => {
                       <option value="FORCE 6" selected>
                         Musculacion
                       </option>
-                      <option value="CROSS 6">CrossFit</option>
-                      <option value="HIIT 6">HIIT</option>
-                      <option value="RIDE 6">Spinning</option>
-                      <option value="RUMBLE 6">Rumble</option>
+                     
                     </select>
                   </div>
                 </MDBCardBody>
