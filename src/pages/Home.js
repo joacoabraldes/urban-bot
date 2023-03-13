@@ -192,7 +192,7 @@ const Home = (props) => {
                       onChange={handleSelectClass}
                       value={selectedClass}
                     >
-                      <option value="FORCE 6" selected>
+                      <option value="FORCE 6" >
                         Musculacion
                       </option>
                      
