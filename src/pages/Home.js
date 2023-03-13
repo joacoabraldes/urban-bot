@@ -7,11 +7,17 @@ import {
   MDBCardBody,
 } from "mdb-react-ui-kit";
 import Navbarr from "../components/Navbarr";
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import ModalPicker from "../components/ModalPicker";
 import "./Home.css";
 import { useLocation } from "react-router-dom";
-import { getFirestore, query, getDocs, doc ,updateDoc} from "firebase/firestore";
+import {
+  getFirestore,
+  query,
+  getDocs,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { collection, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
@@ -49,7 +55,7 @@ const Home = (props) => {
     },
     {
       horarios: [],
-    }
+    },
   ]);
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -60,47 +66,46 @@ const Home = (props) => {
   const [selectedDate, setSelectedDate] = useState(dayOfWeek - 1);
   const [error, setError] = useState(false);
   const [selectedClass, setSelectedClass] = useState("FORCE 6");
-  const [update,setUpdate] = useState(true)
+  const [update, setUpdate] = useState(true);
   const location = useLocation();
   const user = location.state.user;
-  const [userInfo,setUserInfo] = useState(undefined);
-  const [remainingDays, serRemainingDays] = useState(undefined)
- 
-  const getUser  = async (u) => {
+  const [userInfo, setUserInfo] = useState(undefined);
+  const [remainingDays, serRemainingDays] = useState(undefined);
+
+  const getUser = async (u) => {
     const q = query(userRef, where("email", "==", u.email));
     const querySnapshot = await getDocs(q);
-    
+
     var usuario = {};
     querySnapshot.forEach((doc) => {
       usuario = (doc.id, " => ", doc.data());
     });
 
     if (usuario.email === u.email) {
-        setUserInfo(usuario);
-        serRemainingDays(usuario.remainingDays)
-        setWeek([
-          {
-            horarios: usuario.Mon,
-          },
-          {
-            horarios: usuario.Tue,
-          },
-          {
-            horarios: usuario.Wed,
-          },
-          {
-            horarios: usuario.Thu,
-          },
-          {
-            horarios: usuario.Fri,
-          },
-          {
-            horarios: usuario.Sat,
-          }
-          ])
-    } 
-  }
-  
+      setUserInfo(usuario);
+      serRemainingDays(usuario.remainingDays);
+      setWeek([
+        {
+          horarios: usuario.Mon,
+        },
+        {
+          horarios: usuario.Tue,
+        },
+        {
+          horarios: usuario.Wed,
+        },
+        {
+          horarios: usuario.Thu,
+        },
+        {
+          horarios: usuario.Fri,
+        },
+        {
+          horarios: usuario.Sat,
+        },
+      ]);
+    }
+  };
 
   const changeModalVisibility = (bool) => {
     setisModalVisible(true);
@@ -143,11 +148,10 @@ const Home = (props) => {
 
   const handleDelete = () => {
     week[selectedDate].horarios = [];
-    setUpdate(!update)
+    setUpdate(!update);
   };
 
   const handleSave = async () => {
-    
     const theUserRef = doc(db, "users", userInfo.email);
 
     await updateDoc(theUserRef, {
@@ -160,13 +164,11 @@ const Home = (props) => {
     });
   };
 
-
   useEffect(() => {
-    if(userInfo == undefined){
-      getUser(user)
-    }
+      if (userInfo == undefined) {
+        getUser(user);
+      }
   }, []);
-
   return (
     <>
       <Navbarr user={user} />
@@ -179,9 +181,7 @@ const Home = (props) => {
               style={{ borderRadius: "1rem", maxWidth: "600px" }}
             >
               <MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-right mx-auto w-100">
-                <p className="pepe">
-                  DIAS RESTANTES: {remainingDays}
-                </p>
+                <p className="pepe">DIAS RESTANTES: {remainingDays}</p>
               </MDBCardBody>
 
               <div className="selects">
@@ -192,10 +192,7 @@ const Home = (props) => {
                       onChange={handleSelectClass}
                       value={selectedClass}
                     >
-                      <option value="FORCE 6" >
-                        Musculacion
-                      </option>
-                     
+                      <option value="FORCE 6">Musculacion</option>
                     </select>
                   </div>
                 </MDBCardBody>
