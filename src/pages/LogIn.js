@@ -13,6 +13,10 @@ import { collection, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, query, getDocs, doc } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBADh0zs1OxNcoVsurGj-bwCfCUHsbTnyI",
@@ -34,6 +38,7 @@ function LogIn() {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +65,10 @@ function LogIn() {
     navigate("/SignIn");
   };
 
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
@@ -79,8 +88,10 @@ function LogIn() {
                 onSubmit={handleSubmit}
                 className="p-1 d-flex flex-column align-items-center mx-auto w-100"
               >
+                <div className="pepitos">
+                <div className="input-group mb-4 mx-5 w-75">
                 <input
-                  className="form__field"
+                  className="form__field uwu1"
                   wrapperClass="mb-4 mx-5 w-75"
                   labelClass="text-white"
                   placeholder="Usuario"
@@ -90,18 +101,32 @@ function LogIn() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
-
-                <input
-                  className="form__field"
-                  wrapperClass="mb-4 mx-5 w-75"
-                  labelClass="text-white"
-                  placeholder="Contraseña"
-                  id="formControlLg"
-                  type="password"
-                  size="lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                </div>
+                <div className="input-group mb-4 mx-5 w-75">
+                  <input
+                    className="form__field uwu2"
+                    wrapperClass="mb-4 mx-5 w-75"
+                    labelClass="text-white"
+                    placeholder="Contraseña"
+                    id="formControlLg"
+                    type={showPassword ? "text" : "password"}
+                    size="lg"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    className="input-group-text passIcon"
+                    type="button"
+                    onClick={handleShowPassword}
+                  >
+                    {showPassword ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
+                  </button>
+                </div>
+                </div>
                 {error && (
                   <p className="error">
                     *El nombre de usuario o la contraseña no son correctos
@@ -121,7 +146,7 @@ function LogIn() {
               <div className="mb-5 mt-2">
                 <p className="mb-0">
                   ¿No tenes cuenta? &nbsp;
-                  <a className="text-white-50" onClick={SignIn}>
+                  <a className="text-white-50" onClick={SignIn} style={{cursor: "pointer"}}>
                     Crear cuenta
                   </a>
                 </p>

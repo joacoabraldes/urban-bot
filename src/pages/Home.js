@@ -71,6 +71,7 @@ const Home = (props) => {
   const user = location.state.user;
   const [userInfo, setUserInfo] = useState(undefined);
   const [remainingDays, serRemainingDays] = useState(undefined);
+  const [guardado, setGuardado] = useState(false);
 
   const getUser = async (u) => {
     const q = query(userRef, where("email", "==", u.email));
@@ -162,20 +163,31 @@ const Home = (props) => {
       Fri: week[4].horarios,
       Sat: week[5].horarios,
     });
+    setGuardado(true);
   };
 
   useEffect(() => {
       if (userInfo == undefined) {
         getUser(user);
       }
+    
   }, []);
+
+  useEffect(() => {
+    if (guardado) {
+      setTimeout(() => {
+        setGuardado(false);
+      }, 2000);
+    }
+  }, [guardado]);
+
   return (
     <>
       <Navbarr user={user} />
 
       <MDBContainer fluid>
         <MDBRow className="d-flex justify-content-center align-items-center h-100">
-          <MDBCol col="12" style={{ marginTop: "1%" }}>
+          <MDBCol col="12" className="modalHome">
             <MDBCard
               className="bgcard text-white my-5 mx-auto"
               style={{ borderRadius: "1rem", maxWidth: "600px" }}
@@ -183,6 +195,11 @@ const Home = (props) => {
               <MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-right mx-auto w-100">
                 <p className="pepe">DIAS RESTANTES: {remainingDays}</p>
               </MDBCardBody>
+              {remainingDays <= 0 && (
+                  <p className="error">
+                    *No tienes dias disponibles para reservar
+                  </p>
+                )}
 
               <div className="selects">
                 <MDBCardBody className=" pt-2 p-1 d-flex flex-column align-items-right mx-auto w-100">
@@ -218,7 +235,7 @@ const Home = (props) => {
               <p className="pepe">
                 SELECCIONA QUE HORARIOS QUERES RESERVAR (MAX 2) POD DIA:
               </p>
-              {error && <p className="error">*Sos pelotudo o no leiste</p>}
+              {error && <p className="error">*No puedes seleccionar mas de 2 horarios</p>}
               <ModalPicker
                 changeModalVisibility={changeModalVisibility}
                 setData={setData}
@@ -242,6 +259,7 @@ const Home = (props) => {
                 <button className="button" onClick={handleSave}>
                   Guardar Cambios
                 </button>
+                {guardado && <p className="text-success mt-3">Cambios guardados correctamente.</p>}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

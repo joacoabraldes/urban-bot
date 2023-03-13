@@ -82,8 +82,16 @@
   padding-top: 3%;
 }
 
+.modalHome{
+  margin-top:1%;
+}
 
-  
+@media (max-width: 1024px) {
+  .modalHome{
+    margin-top:-15%;
+  }
+}
+
   
   
   

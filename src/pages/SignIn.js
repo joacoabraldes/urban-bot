@@ -18,6 +18,7 @@ import {
   doc,
   updateDoc,
   setDoc,
+  Timestamp,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -39,6 +40,7 @@ function SignIn() {
   const [mail, setMail] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [rpassword, setRpassword] = useState("");
   const [error, setError] = useState(0);
   const [creado, setCreado] = useState(0);
 
@@ -52,40 +54,51 @@ function SignIn() {
     e.preventDefault();
 
     const auth = getAuth();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        mail,
-        password
-      );
-      setError(0);
-      setCreado(1);
-      setId('')
-        setMail('')
-        setPassword('')
-    } catch (error) {
-      console.error(error);
-      setError(1);
+
+
+    if (password === rpassword) {
+      if (isValidGuid(id) ) {
+        try {
+          const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            mail,
+            password
+          );
+          setError(0);
+          setCreado(1);
+          setId('')
+          setMail('')
+          setRpassword('')
+          setPassword('')
+          const newUser = {
+            email: mail,
+            id: id,
+            Mon: [],
+            Tue: [],
+            Wed: [],
+            Thu: [],
+            Fri: [],
+            Sat: [],
+            remainingDays: 3,
+            billedDay: Timestamp.fromDate(new Date()),
+          };
+    
+          await setDoc(doc(userRef, mail), newUser);
+        } catch (error) {
+          console.error(error);
+          setCreado(0);
+          setError(1);
+        }
+      } else {
+        setCreado(0);
+        setError(2);
+      }
+    }else{
+        setCreado(0);
+        setError(3)
     }
 
-    if (isValidGuid(id)) {
-      setError(0);
-      const newUser = {
-        email: mail,
-        id: id,
-        Mon: [],
-        Tue: [],
-        Wed: [],
-        Thu: [],
-        Fri: [],
-        Sat: [],
-        remainingDays: 3,
-      };
-
-      await setDoc(doc(userRef, mail), newUser);
-    } else {
-      setError(2);
-    }
+    
   };
 
   return (
@@ -143,6 +156,18 @@ function SignIn() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
 
+                <input
+                  className="form__field"
+                  wrapperClass="mb-4 mx-5 w-75"
+                  labelClass="text-white"
+                  placeholder="Confirmar Contraseña"
+                  id="formControlLg"
+                  type="password"
+                  size="lg"
+                  value={rpassword}
+                  onChange={(e) => setRpassword(e.target.value)}
+                />
+
                 <button
                   outline
                   className="button mx-2 px-5"
@@ -155,12 +180,16 @@ function SignIn() {
 
                 {error === 1 && (
                   <p className="text-danger mt-3">
-                    Error al crear la cuenta. Por favor, inténtalo de nuevo más
-                    tarde.
+                    La contraseña debe tener al menos 6 caracteres.
                   </p>
                 )}
                 {error === 2 && (
                   <p className="text-danger mt-3">El ID no es valido.</p>
+                )}
+                {error === 3 && (
+                  <p className="text-danger mt-3">
+                    Las contraseñas no coinciden.
+                  </p>
                 )}
                 {creado === 1 && (
                   <p className="text-success mt-3">
