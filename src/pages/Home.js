@@ -259,7 +259,7 @@ const Home = (props) => {
                 <button className="button" onClick={handleSave}>
                   Guardar Cambios
                 </button>
-                {guardado && <p className="text-success mt-3">Cambios guardados correctamente.</p>}
+                {guardado && <p className="mt-3" style={{color: "#2ecc71"}}>Cambios guardados correctamente.</p>}
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

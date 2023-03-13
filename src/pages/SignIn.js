@@ -192,7 +192,7 @@ function SignIn() {
                   </p>
                 )}
                 {creado === 1 && (
-                  <p className="text-success mt-3">
+                  <p className="mt-3" style={{color: "#2ecc71"}}>
                     Cuenta creada correctamente.
                   </p>
                 )}
