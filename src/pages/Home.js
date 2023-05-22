@@ -233,7 +233,7 @@ const Home = (props) => {
               <p className="pepe">
                 SELECCIONA QUE HORARIOS QUERES RESERVAR (MAX 2 POR DIA) :
               </p>
-              {error && <p className="error">*No puedes seleccionar mas de 2 horarios</p>}
+              {error && <p className="error">*No puedes seleccionar más de 2 horarios</p>}
               <ModalPicker
                 changeModalVisibility={changeModalVisibility}
                 setData={setData}
