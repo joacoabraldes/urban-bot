@@ -94,7 +94,7 @@ function LogIn() {
                   className="form__field uwu1"
                   wrapperClass="mb-4 mx-5 w-75"
                   labelClass="text-white"
-                  placeholder="Usuario"
+                  placeholder="Usuarios"
                   id="formControlLg"
                   type="email"
                   size="lg"

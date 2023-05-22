@@ -63,7 +63,7 @@ const Home = (props) => {
   const date = new Date();
   const dayOfWeek = date.getDay();
   const [isModalVisible, setisModalVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(dayOfWeek - 1);
+  const [selectedDate, setSelectedDate] = useState(dayOfWeek === 0? 0 :dayOfWeek - 1);
   const [error, setError] = useState(false);
   const [selectedClass, setSelectedClass] = useState("FORCE 6");
   const [update, setUpdate] = useState(true);
@@ -76,7 +76,6 @@ const Home = (props) => {
   const getUser = async (u) => {
     const q = query(userRef, where("email", "==", u.email));
     const querySnapshot = await getDocs(q);
-
     var usuario = {};
     querySnapshot.forEach((doc) => {
       usuario = (doc.id, " => ", doc.data());
@@ -170,7 +169,6 @@ const Home = (props) => {
       if (userInfo == undefined) {
         getUser(user);
       }
-    
   }, []);
 
   useEffect(() => {
@@ -233,7 +231,7 @@ const Home = (props) => {
               </div>
 
               <p className="pepe">
-                SELECCIONA QUE HORARIOS QUERES RESERVAR (MAX 2) POD DIA:
+                SELECCIONA QUE HORARIOS QUERES RESERVAR (MAX 2 POR DIA) :
               </p>
               {error && <p className="error">*No puedes seleccionar mas de 2 horarios</p>}
               <ModalPicker

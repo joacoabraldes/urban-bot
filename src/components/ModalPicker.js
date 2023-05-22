@@ -22,10 +22,9 @@ const HORARIOS_STRING = [
 ];
 
 const ModalPicker = (props) => {
-  const [update, setUpdate] = useState(false); 
+  const [update, setUpdate] = useState(false);
+  
   const selectedTime = props.week[props.selectedDate].horarios;
-
-
 
   const onPressItem = (horario) => {
     props.setData(horario);
